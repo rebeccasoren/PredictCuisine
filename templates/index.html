@@ -1,13 +1,159 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
         <title>What's Cooking?</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     </head>
     <body>
-        <h1>Model Deployment</h1>
-        <form action="/predict" method="post">
-            <input type="textarea" name="recipe" placeholder="enter your recipe..." />
-            <input type="submit"/>
-        </form>
+        <div
+            class="container py-5">
+            <!--Project Details-->
+            <div class="row mb-1">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4">What's Cooking?</h1>
+                    <p class="lead mb-0">Predict cuisine based on ingredients</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    <div class="bg-white rounded-lg shadow-sm p-5">
+                        <!--Form-->
+                        <form role="form" id="form">
+                            <!--Text Area-->
+                            <div class="form-group row">
+                                <textarea name="ingredients" placeholder="Enter ingredients..." class="form-control" rows="3"></textarea>
+                            </div>
+                            <div style="font-size: 1.05rem; font-weight: 300;" id="prediction"><center>
+                                Greetings, Chef! &#127859
+                            </center></div>
+                        </div>
+                        
+                        <!--Button-->
+                        <button id="predict" type="button" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
+                            Predict
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer
+            class="text-center text-lg-start bg-light text-muted">
+            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                By
+                <a class="text-reset fw-bold" href="#">Rebecca Soren</a>
+                <div>
+                    <a href="https://www.linkedin.com/in/rebecca-shruti-soren/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/rebeccasoren"><i class="fab fa-github"></i></a>
+                    <a href="mailto:sorenrebeccashruti@gmail.com"><i class="fas fa-envelope"></i></a>  
+                </div>
+            </div>
+        </footer>
     </body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+    $('#predict').on('click', function(e) {
+        e.preventDefault();
+        console.log("clicked");
+        var formdata = $('form').serializeArray();
+        //console.log(formdata[0].value);
+        $.ajax({
+            url: '/predict',
+            type: 'POST',
+            data: $('form').serializeArray(),
+            success: function(response, status){
+                console.log(response);
+                var json = JSON.parse(response);
+                var cuisine = json["cuisine"];
+                
+                var italian_icon = "&#127837";
+                var indian_icon = "&#127835;";
+                var korean_icon = "&#127857";
+                var us_icon = "&#127839";
+                var greek_icon="&#129369";
+                var filipino_icon="&#129375";
+                var jamaican_icon="&#129368";
+                var spanish_icon="&#127790";
+                var mexican_icon="&#127791";
+                var chinese_icon="&#129390";
+                var brazilian_icon="&#129748";
+                var russian_icon="&#127858";
+                var irish_icon="&#129368";
+                var british_icon="&#129383";
+                var moroccan_icon="&#129368";
+                var vietnamese_icon="&#129378";
+                var japanese_icon="&#127841";
+                var thai_icon="&#129375";
+                var cajun_creole_icon="&#129368";
+                var french_icon="&#129360";
+                
+                switch(cuisine) {
+                    case "italian":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds yummy "+italian_icon+"</center>";
+                        break;
+                    case "indian":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds delicious "+indian_icon+"</center>";
+                        break;
+                    case "korean":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds tasty "+korean_icon+"</center>";
+                        break;
+                    case "greek":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds delightful "+greek_icon+"</center>";
+                        break;    
+                    case "filipino":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds yummy "+filipino_icon+"</center>";
+                        break;
+                    case "spanish":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds cool "+spanish_icon+"</center>";
+                        break;
+                    case "mexican":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds yumm "+mexican_icon+"</center>";
+                        break;
+                    case "chinese":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds gorgeous "+chinese_icon+"</center>";
+                        break;
+                    case "brazilian":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds lovely "+brazilian_icon+"</center>";
+                        break;
+                    case "russian":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds terrific "+russian_icon+"</center>";
+                        break;
+                    case "irish":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds yummy "+irish_icon+"</center>";
+                        break;
+                    case "british":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds delicious "+british_icon+"</center>";
+                        break;
+                    case "moroccan":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds gorgeous "+moroccan_icon+"</center>";
+                        break;
+                    case "vietnamese":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds tasty "+vietnamese_icon+"</center>";
+                        break;
+                    case "japanese":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds terrific "+japanese_icon+"</center>";
+                        break;
+                    case "thai":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds cool "+thai_icon+"</center>";
+                        break;
+                    case "cajun_creole":
+                        document.getElementById("prediction").innerHTML = "<center>cajun/creole sounds lovely "+cajun_creole_icon+"</center>";
+                        break;
+                    case "french":
+                        document.getElementById("prediction").innerHTML = "<center>"+cuisine+" sounds delightful "+french_icon+"</center>";
+                        break;
+                    default:
+                    document.getElementById("prediction").innerHTML = "<center> Try again, masterchef </center>";            
+                    }
+                
+            },
+            error: function(params) {
+                console.log("Error")
+            }
+        });        
+    });
+</script>
 </html>

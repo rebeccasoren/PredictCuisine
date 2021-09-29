@@ -1,24 +1,21 @@
 import pickle
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, json
+from numpy import empty
 from model_files.ml_model import predict_cuisine
 
 app = Flask("cuisine_prediction")
 
-@app.route('/', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-    recipe=request.get_json()
+    ingredients = request.form['ingredients']
+    if ingredients=="":
+        return json.dumps({'status':'OK','cuisine': 'none'});
     with open('./model_files/model.bin', 'rb') as f_in:
         model=pickle.load(f_in)
         f_in.close()
     
-    predictions=predict_cuisine(recipe, model)
-
-    response={
-        'predictions': list(predictions)
-    }
-
-    return jsonify(response)
-
+    prediction=predict_cuisine(ingredients, model)[0]
+    return json.dumps({'status':'OK','cuisine': prediction});
 
 @app.route('/', methods=['GET'])
 def Home():
